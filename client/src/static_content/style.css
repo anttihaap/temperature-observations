@@ -1,0 +1,118 @@
+body {
+    background-color: rgb(226, 229, 231);
+}
+
+.container {
+    background: #fff;
+    width: 1000px;
+    height: 100%;
+    padding: 0px;
+    /* SHADOW */
+    -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+}
+
+.row {
+    margin: 0%;
+}
+
+.col-md-4, .col-md-3 {
+    background: #61C7EBFF;
+    color: #fff;
+    text-align: center;
+    height: 200px;
+    margin: 10px 0px 0px 10px;
+    border-radius: 5px;
+    padding: 20px 0px 0px 0px;
+    /* SHADOW */
+    -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+}
+
+.last24 {
+    background: white;
+    border-radius: 0px 0px 5px 5px;
+    bottom: 0;
+    margin-top: 20px;
+}
+
+.nav-buttons {
+    padding: 10px;
+}
+
+.form {
+    padding: 20px 10px 0px 10px;
+}
+
+#header {
+    background: #007bff;
+    color: #fff;
+    border-radius: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.city, .city-temp {
+    color: white;
+}
+
+.city {
+    font-size: 20px;
+}
+
+.city-temp {
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.last24-title {
+    color: #61C7EBFF;
+    position: relative;
+    top: -2;
+    font-size: 14;
+    padding-bottom: 2px;
+    font-weight: 700;
+}
+
+.coldest, .warmest {
+    font-weight: 700;
+    position: relative;
+    top: -5;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.coldest {
+    color: #61C7EBFF;
+}
+
+.warmest {
+    color: rgb(241, 154, 71);
+}
+
+.temp {
+    float: right;
+    margin-right: 10px;
+    color: black;
+    font-weight: 600;
+}
+
+.button {
+    /*background: #fff;*/
+    color: black;
+    /* SHADOW */
+    -webkit-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.22);
+}
+
+/* COLOR PALETTE
+#F0F3F6FF // background
+#61C7EBFF // blue
+#A0D5EEFF // lightblue
+*/
