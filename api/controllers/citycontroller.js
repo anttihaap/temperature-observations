@@ -49,7 +49,6 @@ find = (query, req, res) => {
 };
 
 setActiveState = (state, req, res) => {
-  console.log(req.headers.city_id);
   var cityId = Number(req.headers.city_id);
   City.findOneAndUpdate({ _id: cityId, active: !state }, { active: state }, (err, city) => { 
     if (err) {

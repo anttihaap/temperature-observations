@@ -5,7 +5,6 @@ var config = require('../../config')[env];
 var User = require('../models/user');
 
 exports.login = (req, res) => {
-    console.log(config);
     var loginInfo = { name: req.headers.name, password: req.headers.password };
 
     User.findOne({ name: loginInfo.name, password: loginInfo.password }, (err, user) => {

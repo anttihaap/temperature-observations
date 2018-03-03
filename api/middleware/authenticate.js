@@ -4,7 +4,6 @@ var config = require('../../config')[env];
 
 // Middleware to authenticate users by verifying tokens:
 module.exports = (req, res, next) => {
-    console.log(config.jwtSecret);
     let token = req.headers.token;
 
     if (!token) {
