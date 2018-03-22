@@ -37,44 +37,34 @@ export default class AdminPage extends React.Component {
         });
     };
 
-    activatedTodeactivated = (cityId) => {
-        var deactivated = this.state.deactivatedCities;
-        var activated = this.state.activatedCities;
-        let found = null;
-        let foundIndex = null;
-        activated.forEach((city, index, arr) => {
+    swapCity = (src, dst, cityId) => {
+        let foundCity = src.reduce((foundCity, city, index) => {
             if (city.id == cityId) {
-                found = city;
-                foundIndex = index;
+                return {index, city};
             }
-        });
-        if (found) {
-            activated.splice(foundIndex, 1);
-            deactivated.push(found);
-            this.setState({ deactivatedCities: deactivated, activatedCities: activated });
+            return foundCity;
+        }, undefined);
+
+        if (foundCity) {
+            src.splice(foundCity.index, 1);
+            dst.push(foundCity.city);
         }
+
+        return({src, dst});
+    }
+
+    activatedTodeactivated = (cityId) => {
+        let swapped = this.swapCity(this.state.activatedCities, this.state.deactivatedCities, cityId);
+        this.setState({activatedCities: swapped.src, deactivatedCities: swapped.dst});
     };
 
     deactivatedToActivated = (cityId) => {
-        var deactivated = this.state.deactivatedCities;
-        var activated = this.state.activatedCities;
-        let found = null;
-        let foundIndex = null;
-        deactivated.forEach((city, index, arr) => {
-            if (city.id == cityId) {
-                found = city;
-                foundIndex = index;
-            }
-        });
-        if (found) {
-            deactivated.splice(foundIndex, 1);
-            activated.push(found);
-            this.setState({ deactivatedCities: deactivated, activatedCities: activated });
-        }
+        let swapped = this.swapCity(this.state.deactivatedCities, this.state.activatedCities);
+        this.setState({deactivatedCities: swapped.src, activatedCities: swapped.dst});
     };
 
     addCity = (city) => {
-        var activated = this.state.activatedCities;
+        let activated = this.state.activatedCities;
         activated.push(city);
         this.setState({activatedCities: activated});
     };
