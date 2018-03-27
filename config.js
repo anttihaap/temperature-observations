@@ -15,7 +15,7 @@ var config = {
     },
     prod: {
         database: {
-            host: 'mongodb://localhost/temperatures'
+            host: 'mongodb://mongodb/temperatures'
         },
         serverPort: 8080,
         jwtSecret: 'PRODSECRET'
