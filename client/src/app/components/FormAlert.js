@@ -1,4 +1,5 @@
 import React from "react";
+import { SuccessfullSubmissionStatus, FailedSubmissionStatus } from "./SubmissionStatus";
 
 const SuccessAlert = ({ successMessage }) => (
     <div className='alert alert-success' role="alert">
@@ -15,14 +16,21 @@ const DangerAlert = ({ errMessage }) => (
 export class FormAlert extends React.Component {
 
     render() {
-        if (this.props.formStatus.success == true) {
+
+        const submissionStatus = this.props.submissionStatus;
+
+        if (submissionStatus == null || submissionStatus == undefined) {
+            return (<div></div>);
+        }
+
+        if (submissionStatus.isSuccessful()) {
             return (
-                <SuccessAlert successMessage={this.props.formStatus.successMessage} />
+                <SuccessAlert successMessage={submissionStatus.getSuccessMessage()} />
             );
-        } else if (this.props.formStatus.success == false) {
+        } else if (!submissionStatus.isSuccessful()) {
             return (
                 <div>
-                    {this.props.formStatus.errorMessages.map((errorMessage) => {
+                    {submissionStatus.getErrorMessages().map((errorMessage) => {
                         return (
                             <DangerAlert errMessage={errorMessage} />
                         );

@@ -1,6 +1,7 @@
 import React from "react";
 import { post } from "../../util/PostToApi";
 import { FormAlert } from "../FormAlert";
+import { SuccessfulSubmissionStatus, FailedSubmissionStatus } from "../SubmissionStatus";
 import { getToken, logOut } from "../../util/Authentication";
 
 export default class ActivateCity extends React.Component {
@@ -8,18 +9,9 @@ export default class ActivateCity extends React.Component {
     constructor() {
         super();
         this.state = {
-            deactivated: null,
-            formStatus: {
-                redirectHome: false,
-                success: null,
-                successMessage: null,
-                errorMessages: null
-            }
+            redirectHome: false,
+            submissionStatus: null
         }
-    }
-
-    setFormStatus = (success, successMessage, errorMessages) => {
-        this.setState({formStatus: {success, successMessage, errorMessages}});
     }
 
     activateCity = (event) => {
@@ -31,17 +23,23 @@ export default class ActivateCity extends React.Component {
             token: getToken()
         }).then((res) => {
             if (res.ok) {
-                this.setFormStatus(true, {strong: 'City activated', message: ''}, null);
+                this.setState({submissionStatus: new SuccessfulSubmissionStatus(
+                    {strong: 'City activated', message: ''}
+                )});
                 this.props.deactivatedToActivated(city_id);
                 this.clearForm();
             } else if (res.status == 403) {
                 logOut();
                 this.setState({redirectHome: true});
             } else {
-                this.setFormStatus(false, null, [{strong: 'API error', message: 'status: ' + res.status}])
+                this.setState({submissionStatus: new FailedSubmissionStatus([
+                    {strong: 'API error', message: 'status: ' + res.status}
+                ])});
             }
         }).catch((err) => {
-            this.setFormStatus(false, null, [{strong: 'API error', message: err.message}])
+            this.setState({submissionStatus: new FailedSubmissionStatus(
+                [{strong: 'API error', message: err.message}]
+            )})
         });
     }
 
@@ -65,7 +63,7 @@ export default class ActivateCity extends React.Component {
                         </select>
                     </div>
                     <button type="submit" className="btn btn-primary">Add</button>
-                    <FormAlert formStatus={this.state.formStatus} />
+                    <FormAlert submissionStatus={this.state.submissionStatus} />
                     {this.state.redirectHome && <Redirect to='/'/>}
                 </form>
             </div>

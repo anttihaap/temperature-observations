@@ -1,6 +1,7 @@
 import React from "react";
 
 import { FormAlert } from "../FormAlert";
+import { SuccessfulSubmissionStatus, FailedSubmissionStatus } from "../SubmissionStatus";
 import { isTokenExpired  } from "../../util/Authentication";
 import { post } from "../../util/PostToApi";
 
@@ -10,9 +11,7 @@ export default class LoginButton extends React.Component {
         super();
         this.state = {
             redirect: false,
-            success: null,
-            successMessage: null,
-            errorMessages: null
+            submissionStatus: null
         }
     }
 
@@ -33,25 +32,22 @@ export default class LoginButton extends React.Component {
                 this.props.renderHeader();
             } else if (res.status == 403) {
                 this.setState({
-                    success: false,
-                    errorMessages: [
+                    submissionStatus: new FailedSubmissionStatus([
                         {strong: '', message: 'Username or password wrong.'}
-                    ]
+                    ])
                 });
             } else {
                 this.setState({
-                    success: false,
-                    errorMessages: [
+                    submissionStatus: new FailedSubmissionStatus([
                         {strong: 'API FAIL', message: res.status}
-                    ]
+                    ])
                 });
             }
         }).catch((res) => {
             this.setState({
-                success: false,
-                errorMessages: [
+                submissionStatus: new FailedSubmissionStatus([
                     {strong: 'Error occured!', message: ''}
-                ]
+                ])
             });
         });
     }
@@ -75,7 +71,7 @@ export default class LoginButton extends React.Component {
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary">Sign in</button>
                         </div>
-                        <FormAlert formStatus={this.state} />
+                        <FormAlert submissionStatus={this.state.submissionStatus} />
                     </form>
                 </div>
             </div>

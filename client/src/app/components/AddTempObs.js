@@ -1,5 +1,6 @@
 import React from "react";
 import { FormAlert } from "./FormAlert";
+import { SuccessfulSubmissionStatus, FailedSubmissionStatus } from "./SubmissionStatus";
 import { post } from "../util/PostToApi"
 
 export default class AddTempObs extends React.Component {
@@ -7,9 +8,7 @@ export default class AddTempObs extends React.Component {
     constructor() {
         super();
         this.state = {
-            success: null,
-            successMessage: null,
-            errorMessages: null
+            submissionStatus: null
         }
     }
 
@@ -32,8 +31,7 @@ export default class AddTempObs extends React.Component {
         //if there are errors set state and return from function
         if (errorMessages.length != 0) {
             this.setState({
-                success: false,
-                errorMessages: errorMessages
+                submissionStatus: new FailedSubmissionStatus(errorMessages)
             })
             return;
         }
@@ -51,23 +49,21 @@ export default class AddTempObs extends React.Component {
             }
         }).then((res) => {
             this.setState({
-                success: true,
-                successMessage: {
+                submissionStatus: new SuccessfulSubmissionStatus({
                     strong: 'Added temperature!',
                     message: ''
-                }
+                })
             });
             this.clearInputFields();
             this.props.updateTempsLocally(userInput);
         }).catch((err) => {
             this.setState({
-                success: false,
-                errorMessages: [
+                submissionStatus: new FailedSubmissionStatus([
                     {
                         strong: 'API error!',
                         message: err.message
                     }
-                ]
+                ])
             })
         });
     };
@@ -130,7 +126,7 @@ export default class AddTempObs extends React.Component {
                     </div>
                     <button type="submit" className="btn btn-primary">Add</button>
                 </form>
-                <FormAlert formStatus={this.state} />
+                <FormAlert submissionStatus={this.state.submissionStatus} />
             </div>
         );
     };
